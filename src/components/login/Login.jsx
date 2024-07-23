@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <form onSubmit={(e) => handleSubmit(e)}>
         <h3>Login</h3>
         <div>
@@ -37,8 +37,33 @@ const Login = () => {
         </div>
         <button>Login</button>
       </form>
-    </div>
+    </Wrapper>
   );
 };
 
 export default Login;
+
+const Wrapper = styled.div`
+  border: 1px solid black;
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  input {
+    display: flex;
+  }
+
+  button {
+    margin: 7px 0 7px 0;
+  }
+`;
