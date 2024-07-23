@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { signup } from "../../utils/fetch";
+import styled from "styled-components";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="wrapper">
+    <Wrapper>
       <form onSubmit={(e) => handleSubmit(e)}>
         <h3>Signup</h3>
         <div>
@@ -43,8 +44,33 @@ const Signup = () => {
         </div>
         <button>Signup</button>
       </form>
-    </div>
+    </Wrapper>
   );
 };
 
 export default Signup;
+
+const Wrapper = styled.div`
+  border: 1px solid black;
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  input {
+    display: flex;
+  }
+
+  button {
+    margin: 7px 0 7px 0;
+  }
+`;
