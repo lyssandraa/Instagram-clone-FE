@@ -1,9 +1,10 @@
 import "./App.css";
+import Layout from "./components/layout/Layout";
 
 const App = () => {
   return (
     <>
-      <h1>{import.meta.env.VITE_TEST}</h1>
+      <Layout />
     </>
   );
 };
