@@ -2,7 +2,7 @@ import { useState } from "react";
 import { signup } from "../../utils/fetch";
 import styled from "styled-components";
 
-const Signup = () => {
+const Signup = ({ logOrSignSetters }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,12 +13,17 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const data = await signup(username, email, password);
-
-    setUsername();
-    setEmail();
-    setPassword();
+    try {
+      const data = await signup(username, email, password);
+      console.log(data);
+      logOrSignSetters.setIsLoggedIn(true);
+      logOrSignSetters.setLoggedUser(data);
+      setUsername("");
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.log("Signup failed", err);
+    }
   };
 
   return (

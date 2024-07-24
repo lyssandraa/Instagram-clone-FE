@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
-const Header = () => {
+const Header = ({ loggedUser }) => {
   return (
     <StyledHeader>
       <InnerContainer>
         <h2>Instagram</h2>
-        <p>Please login</p>
+        {!loggedUser ? (
+          <p>Please login</p>
+        ) : (
+          <p>Hello {loggedUser.user.username}</p>
+        )}
       </InnerContainer>
     </StyledHeader>
   );
