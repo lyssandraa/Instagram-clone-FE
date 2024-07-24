@@ -2,7 +2,7 @@ import { useState } from "react";
 import { login } from "../../utils/fetch";
 import styled from "styled-components";
 
-const Login = () => {
+const Login = ({ logOrSignSetters }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,15 +13,21 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = await login(username, password);
-
-    setUsername();
-    setPassword();
+    try {
+      const data = await login(username, password);
+      console.log(data);
+      logOrSignSetters.setIsLoggedIn(true);
+      logOrSignSetters.setLoggedUser(data);
+      setUsername("");
+      setPassword("");
+    } catch (err) {
+      console.log("Login failed", err);
+    }
   };
 
   return (
     <Wrapper>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         <h3>Login</h3>
         <div>
           <input
@@ -35,7 +41,7 @@ const Login = () => {
             placeholder="Password..."
           />
         </div>
-        <button>Login</button>
+        <button type="submit">Login</button>
       </form>
     </Wrapper>
   );
