@@ -4,10 +4,10 @@ import styled from "styled-components";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 
-const Layout = ({ children, loggedUser }) => {
+const Layout = ({ children, loggedUser, setShowLogin }) => {
   return (
     <LayoutWrapper>
-      <Header loggedUser={loggedUser} />
+      <Header loggedUser={loggedUser} setShowLogin={setShowLogin} />
       {children}
       <Footer />
     </LayoutWrapper>

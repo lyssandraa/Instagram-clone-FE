@@ -8,6 +8,7 @@ import PhotosContainer from "./components/photosContainer/PhotosContainer";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState(null);
+  const [showLogin, setShowLogin] = useState(true);
 
   const logOrSignSetters = {
     isLoggedIn,
@@ -18,10 +19,20 @@ const App = () => {
 
   return (
     <>
-      <Layout loggedUser={loggedUser}>
-        <Signup logOrSignSetters={logOrSignSetters} />
-        <Login logOrSignSetters={logOrSignSetters} />
-        {isLoggedIn ? <PhotosContainer /> : null}
+      <Layout loggedUser={loggedUser} setShowLogin={setShowLogin}>
+        {isLoggedIn ? (
+          <PhotosContainer />
+        ) : showLogin ? (
+          <Login
+            logOrSignSetters={logOrSignSetters}
+            setShowLogin={setShowLogin}
+          />
+        ) : (
+          <Signup
+            logOrSignSetters={logOrSignSetters}
+            setShowLogin={setShowLogin}
+          />
+        )}
       </Layout>
     </>
   );
