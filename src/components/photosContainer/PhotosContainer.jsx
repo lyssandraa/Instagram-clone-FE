@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { fecthPhotos } from "../../utils/fetch";
 import styled from "styled-components";
 
-const PhotosContainer = () => {
+const PhotosContainer = ({ isLoggedIn }) => {
   const [photos, setPhotos] = useState([]);
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ const PhotosContainer = () => {
       }
     };
     loadPhotos();
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <Wrapper>

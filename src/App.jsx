@@ -21,7 +21,7 @@ const App = () => {
       <Layout loggedUser={loggedUser}>
         <Signup logOrSignSetters={logOrSignSetters} />
         <Login logOrSignSetters={logOrSignSetters} />
-        <PhotosContainer />
+        {isLoggedIn ? <PhotosContainer /> : null}
       </Layout>
     </>
   );

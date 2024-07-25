@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Login = ({ logOrSignSetters }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [err, setErr] = useState("");
 
   const handleChange = (e, setter) => {
     setter(e.target.value);
@@ -15,12 +16,16 @@ const Login = ({ logOrSignSetters }) => {
 
     try {
       const data = await login(username, password);
-      console.log(data);
-      logOrSignSetters.setIsLoggedIn(true);
-      logOrSignSetters.setLoggedUser(data);
-      setUsername("");
-      setPassword("");
+      if (data.err) {
+        setErr("User not found");
+      } else {
+        logOrSignSetters.setIsLoggedIn(true);
+        logOrSignSetters.setLoggedUser(data);
+        setUsername("");
+        setPassword("");
+      }
     } catch (err) {
+      setErr("User not found");
       console.log("Login failed", err);
     }
   };
@@ -29,6 +34,7 @@ const Login = ({ logOrSignSetters }) => {
     <Wrapper>
       <form onSubmit={handleSubmit}>
         <h3>Login</h3>
+        {err && <ErrMsg>{err}</ErrMsg>}
         <div>
           <input
             onChange={(e) => handleChange(e, setUsername)}
@@ -72,4 +78,9 @@ const Wrapper = styled.div`
   button {
     margin: 7px 0 7px 0;
   }
+`;
+
+const ErrMsg = styled.p`
+  color: red;
+  margin: 10px;
 `;
