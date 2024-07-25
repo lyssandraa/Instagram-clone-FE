@@ -2,7 +2,7 @@ import { useState } from "react";
 import { signup } from "../../utils/fetch";
 import styled from "styled-components";
 
-const Signup = ({ logOrSignSetters }) => {
+const Signup = ({ logOrSignSetters, setShowLogin }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +29,7 @@ const Signup = ({ logOrSignSetters }) => {
   return (
     <Wrapper>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <h3>Signup</h3>
+        <h3>Sign Up</h3>
         <div>
           <input
             onChange={(e) => handleChange(e, setUsername)}
@@ -48,6 +48,9 @@ const Signup = ({ logOrSignSetters }) => {
           />
         </div>
         <button>Signup</button>
+        <p onClick={() => setShowLogin(true)}>
+          Already have an account? <a>Log in</a>
+        </p>
       </form>
     </Wrapper>
   );
@@ -56,26 +59,42 @@ const Signup = ({ logOrSignSetters }) => {
 export default Signup;
 
 const Wrapper = styled.div`
-  border: 1px solid black;
   width: 250px;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 43%;
 
   form {
     width: 100%;
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    padding-right: 20px;
+    border: 1px solid black;
   }
 
   input {
+    width: 100%;
+    padding: 8px;
     display: flex;
+    margin-bottom: 10px;
   }
 
   button {
     margin: 7px 0 7px 0;
+  }
+
+  p {
+    margin-top: 10px;
+  }
+
+  a {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
   }
 `;
