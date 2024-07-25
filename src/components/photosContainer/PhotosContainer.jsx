@@ -42,24 +42,23 @@ const PhotosContainer = () => {
   );
 };
 
-export default PhotoGalleryPage;
+export default PhotosContainer;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
 `;
 
-const GalleryWrapper = styled.div`
+const PhotosWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
   margin-top: 20px;
+  gap: 20px;
+  justify-content: space-evenly;
 
   div {
     border: 1px solid #ccc;
-    padding: 10px;
   }
 
   img {
