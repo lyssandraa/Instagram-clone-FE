@@ -19,5 +19,4 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
   border-top: 1px solid black;
-  margin-top: auto;
 `;

@@ -6,12 +6,16 @@ import Footer from "../footer/Footer";
 
 const Layout = ({ children, loggedUser }) => {
   return (
-    <div>
+    <LayoutWrapper>
       <Header loggedUser={loggedUser} />
       {children}
       <Footer />
-    </div>
+    </LayoutWrapper>
   );
 };
 
 export default Layout;
+
+const LayoutWrapper = styled.div`
+  min-height: 100vh;
+`;
