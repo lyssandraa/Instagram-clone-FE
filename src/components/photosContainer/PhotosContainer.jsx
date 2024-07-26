@@ -45,6 +45,7 @@ const PhotosContainer = ({ isLoggedIn }) => {
 export default PhotosContainer;
 
 const Wrapper = styled.div`
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
