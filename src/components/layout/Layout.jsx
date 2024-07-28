@@ -17,5 +17,5 @@ const Layout = ({ children, loggedUser, setShowLogin }) => {
 export default Layout;
 
 const LayoutWrapper = styled.div`
-  min-height: 100vh;
+  height: 100vh;
 `;

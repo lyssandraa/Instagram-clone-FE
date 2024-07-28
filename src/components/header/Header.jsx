@@ -30,9 +30,10 @@ const StyledHeader = styled.header`
 
 const InnerContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  gap: 80vw;
+  padding: 0 20px;
+  width: 100%;
 
   h2 {
     font-family: cursive;
