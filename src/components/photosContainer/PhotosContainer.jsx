@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
-import { fecthPhotos } from "../../utils/fetch";
+import { fetchPhotos, addFave, getFaves } from "../../utils/fetch";
 import styled from "styled-components";
 
-const PhotosContainer = ({ isLoggedIn }) => {
+const PhotosContainer = ({ isLoggedIn, loggedInUserId }) => {
   const [photos, setPhotos] = useState([]);
+  const [favourites, setFavourites] = useState([]);
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadPhotos = async () => {
       try {
-        const data = await fecthPhotos();
+        const data = await fetchPhotos();
         setPhotos(data);
       } catch (err) {
         console.log("Error fetching photos:", err);
@@ -19,8 +20,43 @@ const PhotosContainer = ({ isLoggedIn }) => {
         setLoading(false);
       }
     };
+
+    const loadFavourites = async () => {
+      try {
+        const faves = await getFaves(loggedInUserId);
+        setFavourites(faves);
+      } catch (err) {
+        console.log("Error fetching favourites:", err);
+      }
+    };
+
     loadPhotos();
-  }, [isLoggedIn]);
+
+    if (isLoggedIn) {
+      loadFavourites();
+    }
+  }, [isLoggedIn, loggedInUserId]);
+
+  const handleLike = async (photo) => {
+    try {
+      const data = await addFave(photo, loggedInUserId);
+      if (data && data.fave) {
+        setFavourites((prevFavourites) => [...prevFavourites, data.fave]);
+      }
+    } catch (err) {
+      console.log("Error liking photo:", err);
+    }
+  };
+
+  const isFavourite = (photoId) => {
+    return favourites.some((fave) => fave.id === photoId);
+  };
+
+  const renderLikeButton = (photo) => {
+    const isLiked = isFavourite(photo.id);
+    const buttonText = isLiked ? "Liked" : "Like";
+    return <button onClick={() => handleLike(photo)}>{buttonText}</button>;
+  };
 
   return (
     <Wrapper>
@@ -31,10 +67,11 @@ const PhotosContainer = ({ isLoggedIn }) => {
       ) : (
         <PhotosWrapper>
           {photos.map((photo) => (
-            <div key={photo.id}>
-              <img src={photo.imageUrls.small} alt={photo.photographer_name} />
+            <PhotoCard key={photo.id}>
+              <img src={photo.imageUrls?.small} alt={photo.photographer_name} />
               <p>{photo.photographer_name}</p>
-            </div>
+              {isLoggedIn && renderLikeButton(photo)}
+            </PhotoCard>
           ))}
         </PhotosWrapper>
       )}
@@ -45,25 +82,39 @@ const PhotosContainer = ({ isLoggedIn }) => {
 export default PhotosContainer;
 
 const Wrapper = styled.div`
-  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px;
+  width: 100%;
 `;
 
 const PhotosWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
   gap: 20px;
-  justify-content: space-evenly;
+  justify-content: center;
+  width: 100%;
+`;
 
-  div {
-    border: 1px solid #ccc;
-  }
+const PhotoCard = styled.div`
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 200px;
 
   img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  button {
+    margin-top: 10px;
   }
 `;

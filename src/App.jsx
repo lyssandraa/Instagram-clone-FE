@@ -4,11 +4,13 @@ import Layout from "./components/layout/Layout";
 import Signup from "./components/signup/Signup";
 import Login from "./components/login/Login";
 import PhotosContainer from "./components/photosContainer/PhotosContainer";
+import FavePhotos from "./components/favePhotosContainer/FavePhotos";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState(null);
   const [showLogin, setShowLogin] = useState(true);
+  const [showFaves, setShowFaves] = useState(false);
 
   const logOrSignSetters = {
     isLoggedIn,
@@ -18,10 +20,25 @@ const App = () => {
   };
 
   return (
-    <>
+    <div className="App">
       <Layout loggedUser={loggedUser} setShowLogin={setShowLogin}>
         {isLoggedIn ? (
-          <PhotosContainer />
+          <>
+            <button onClick={() => setShowFaves(!showFaves)}>
+              {showFaves ? "Show All Photos" : "Show Favourite Photos"}
+            </button>
+            {showFaves ? (
+              <FavePhotos
+                isLoggedIn={isLoggedIn}
+                loggedInUserId={loggedUser.user.id}
+              />
+            ) : (
+              <PhotosContainer
+                isLoggedIn={isLoggedIn}
+                loggedInUserId={loggedUser.user.id}
+              />
+            )}
+          </>
         ) : showLogin ? (
           <Login
             logOrSignSetters={logOrSignSetters}
@@ -34,7 +51,7 @@ const App = () => {
           />
         )}
       </Layout>
-    </>
+    </div>
   );
 };
 
